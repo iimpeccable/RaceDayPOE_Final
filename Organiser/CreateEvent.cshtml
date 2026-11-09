@@ -1,0 +1,82 @@
+﻿@model RacingDays.Web.Models.CreateEventViewModel
+
+@{
+    ViewData["Title"] = "Create Race Event";
+    var categories = ViewBag.Categories as List<RacingDays.Web.Models.CategoryViewModel> ?? new List<RacingDays.Web.Models.CategoryViewModel>();
+}
+
+<div class="container my-5" style="max-width: 700px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-white m-0"><i class="bi bi-plus-circle text-lime me-2"></i>Create New Race Event</h2>
+        <a asp-action="Dashboard" class="btn btn-outline-lime">Cancel</a>
+    </div>
+
+    <div class="card card-dark p-4 p-md-5">
+        <form asp-action="CreateEvent" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label text-white font-weight-bold">Event Title</label>
+                <input asp-for="Name" class="form-control" placeholder="e.g., Mbombela City Marathon 2026" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label text-white font-weight-bold">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe course details, start line logistics, etc." required></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Date" class="form-label text-white font-weight-bold">Event Date & Time</label>
+                    <input asp-for="Date" type="datetime-local" class="form-control" value="@Model.Date.ToString("yyyy-MM-ddTHH:mm")" required />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Distance" class="form-label text-white font-weight-bold">Distance (km)</label>
+                    <input asp-for="Distance" type="number" step="0.1" class="form-control" required />
+                    <span asp-validation-for="Distance" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Location" class="form-label text-white font-weight-bold">Venue / Location</label>
+                    <input asp-for="Location" class="form-control" placeholder="e.g., Matsulu / Nelspruit" required />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="EventType" class="form-label text-white font-weight-bold">Event Type</label>
+                    <select asp-for="EventType" class="form-select">
+                        <option value="Road Running">Road Running</option>
+                        <option value="Trail Running">Trail Running</option>
+                        <option value="Cycling">Cycling</option>
+                        <option value="Obstacle Course">Obstacle Course</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Dynamic Category Selection Dropdown -->
+            <div class="mb-3">
+                <label asp-for="CategoryId" class="form-label text-white font-weight-bold">Default Race Category</label>
+                <select asp-for="CategoryId" class="form-select">
+                    @foreach (var cat in categories)
+                    {
+                        <option value="@cat.CategoryId">@cat.Name (@cat.Type)</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-white font-weight-bold">Upload Event Banner Image (Optional)</label>
+                <input type="file" name="bannerFile" class="form-control" accept="image/*" />
+            </div>
+
+            <button type="submit" class="btn btn-lime w-100 py-3 shadow">
+                Publish Event
+            </button>
+        </form>
+    </div>
+</div>

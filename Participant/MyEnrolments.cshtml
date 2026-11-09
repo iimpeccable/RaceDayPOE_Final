@@ -1,0 +1,49 @@
+﻿@model List<RacingDays.Web.Models.RegistrationViewModel>
+
+@{
+    ViewData["Title"] = "My Enrolments";
+}
+
+<div class="container my-5" style="max-width: 900px;">
+    <h2 class="fw-bold text-off-white mb-4"><i class="bi bi-ticket-perforated text-lime me-2"></i>My Event Enrolments</h2>
+
+    <div class="card card-dark overflow-hidden p-4">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-dark-custom align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Race Event</th>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var reg in Model)
+                        {
+                            <tr>
+                                <td><strong class="text-off-white">@reg.EventName</strong></td>
+                                <td>@reg.EventDate.ToString("MMM dd, yyyy")</td>
+                                <td><span class="badge badge-lime">@reg.CategoryName</span></td>
+                                <td>
+                                    <span class="badge bg-success text-dark fw-bold px-3 py-2">
+                                        <i class="bi bi-check-circle me-1"></i> @reg.Status
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <p class="text-muted-slate mb-3">You haven't enrolled for any races yet.</p>
+                <a asp-action="Index" class="btn btn-lime">Explore Upcoming Events</a>
+            </div>
+        }
+    </div>
+</div>
