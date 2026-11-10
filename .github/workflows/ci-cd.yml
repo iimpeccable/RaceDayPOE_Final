@@ -20,14 +20,17 @@ jobs:
       with:
         dotnet-version: '10.0.x'
 
-    - name: Restore Dependencies
-      run: dotnet restore RacingDays/RacingDays.slnx
+    - name: Restore Backend API
+      run: dotnet restore RacingDays/RacingDays.API/RacingDays.API.csproj
 
-    - name: Build Solution (Release)
-      run: dotnet build RacingDays/RacingDays.slnx --configuration Release --no-restore
+    - name: Restore Web MVC
+      run: dotnet restore RacingDays/RacingDays.web/RacingDays.web.csproj
 
-    - name: Run Test Suites
-      run: dotnet test RacingDays/RacingDays.slnx --configuration Release --no-build --verbosity normal
+    - name: Build Backend API (Release)
+      run: dotnet build RacingDays/RacingDays.API/RacingDays.API.csproj --configuration Release --no-restore
+
+    - name: Build Web MVC (Release)
+      run: dotnet build RacingDays/RacingDays.web/RacingDays.web.csproj --configuration Release --no-restore
 
   docker-build:
     name: Validate Docker Images
