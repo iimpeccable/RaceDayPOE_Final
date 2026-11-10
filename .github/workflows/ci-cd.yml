@@ -42,7 +42,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Build Web API Docker Image
-      run: docker build -t raceday-api:latest -f RacingDays/RacingDays.API/Dockerfile RacingDays
+      run: docker build -t raceday-api:latest -f RacingDays/RacingDays.API/Dockerfile RacingDays/RacingDays.API
 
     - name: Build MVC Web Docker Image
-      run: docker build -t raceday-web:latest -f RacingDays/Racingdays.web/Dockerfile RacingDays
+      run: docker build -t raceday-web:latest -f RacingDays/Racingdays.web/Dockerfile RacingDays/Racingdays.web
