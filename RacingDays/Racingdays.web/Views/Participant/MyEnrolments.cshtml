@@ -1,0 +1,49 @@
+﻿@model List<RacingDays.Web.Models.EnrolmentViewModel>
+
+@{
+    ViewData["Title"] = "My Enrolments";
+}
+
+<div class="container my-5" style="max-width: 900px;">
+    <h2 class="fw-bold text-off-white mb-4"><i class="bi bi-ticket-perforated text-lime me-2"></i>My Event Enrolments</h2>
+
+    <div class="card card-dark overflow-hidden p-4">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0" style="background-color: #1E293B;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #334155;">
+                            <th class="text-off-white py-3">Race Event</th>
+                            <th class="text-off-white py-3">Date</th>
+                            <th class="text-off-white py-3">Category</th>
+                            <th class="text-off-white py-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var reg in Model)
+                        {
+                            <tr style="border-bottom: 1px solid #334155;">
+                                <td class="py-3"><strong class="text-off-white fs-6">@reg.EventName</strong></td>
+                                <td class="py-3 text-muted-slate">@reg.EventDate.ToString("MMM dd, yyyy")</td>
+                                <td class="py-3"><span class="badge badge-lime px-3 py-2">@reg.CategoryName</span></td>
+                                <td class="py-3">
+                                    <span class="badge bg-success text-dark fw-bold px-3 py-2">
+                                        <i class="bi bi-check-circle me-1"></i> @reg.Status
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <p class="text-muted-slate mb-3">You haven't enrolled for any races yet.</p>
+                <a asp-action="Index" class="btn btn-lime">Explore Upcoming Events</a>
+            </div>
+        }
+    </div>
+</div>

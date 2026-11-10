@@ -1,0 +1,41 @@
+﻿@model RacingDays.Web.Models.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "Participant Profile";
+}
+
+<div class="container my-5" style="max-width: 600px;">
+    <h2 class="fw-bold text-off-white mb-4"><i class="bi bi-person-badge text-lime me-2"></i>My Athlete Profile</h2>
+
+    <div class="card card-dark p-4 p-md-5">
+        <form asp-action="Profile" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Full Name</label>
+                <input asp-for="Name" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Email Address</label>
+                <input asp-for="Email" class="form-control" readonly />
+                <small class="text-muted-slate">Email address cannot be changed directly.</small>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Age" class="form-label">Age</label>
+                    <input asp-for="Age" type="number" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Contact" class="form-label">Contact Number</label>
+                    <input asp-for="Contact" class="form-control" required />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-lime w-100 py-3 shadow mt-3">
+                Save Profile Changes
+            </button>
+        </form>
+    </div>
+</div>

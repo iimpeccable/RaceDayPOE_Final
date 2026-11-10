@@ -1,0 +1,40 @@
+﻿@model RacingDays.Web.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container my-5" style="max-width: 450px;">
+    <div class="card card-dark shadow-lg p-4 p-md-5">
+        <div class="card-body p-0">
+            <h3 class="card-title text-center text-off-white mb-4 fw-bold">Sign In</h3>
+
+            <form asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <input asp-for="Email" class="form-control" placeholder="name@example.com" required />
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" required />
+                </div>
+
+                <button type="submit" class="btn btn-lime w-100 py-3 shadow mb-3">Sign In</button>
+            </form>
+
+            <hr class="border-secondary my-4" />
+
+            <!-- Direct Dev Bypass Actions -->
+            <div class="text-center">
+                <p class="text-muted-slate small mb-3">Development Direct Login Bypass:</p>
+                <div class="d-grid gap-2">
+                    <a asp-action="DevLoginOrganiser" class="btn btn-outline-lime btn-sm py-2">Sign in as Organiser (dummyadmin)</a>
+                    <a asp-action="DevLoginParticipant" class="btn btn-outline-lime btn-sm py-2">Sign in as Participant (dummyparticipant)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

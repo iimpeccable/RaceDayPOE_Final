@@ -1,0 +1,114 @@
+﻿@model IEnumerable<RacingDays.Web.Models.EventViewModel>
+
+@{
+    ViewData["Title"] = "Upcoming Races";
+}
+
+<!-- Centered Hero Section -->
+<div class="hero-banner-custom p-5 text-center my-4 shadow-lg">
+    <h1 class="display-4 fw-bold text-lime mb-2">PULSE OF THE RACE</h1>
+    <p class="lead text-muted-slate max-w-600 mx-auto mb-4">Discover, register, and conquer local running, trail, and cycling events across Mpumalanga.</p>
+
+    <div class="d-flex justify-content-center gap-3">
+        @if (Context.Session.GetString("UserRole") == "Organiser")
+        {
+            <a asp-controller="Organiser" asp-action="CreateEvent" class="btn btn-lime shadow">
+                <i class="bi bi-plus-circle me-1"></i> Host New Race
+            </a>
+        }
+        else if (string.IsNullOrEmpty(Context.Session.GetString("UserName")))
+        {
+            <a asp-controller="Account" asp-action="Register" class="btn btn-lime shadow">
+                Get Started
+            </a>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-lime">
+                Sign In
+            </a>
+        }
+    </div>
+</div>
+
+<!-- Section Directory Header with Lime Trophy & Off-White Text -->
+<div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-2">
+    <h3 class="fw-bold text-off-white m-0">
+        <i class="bi bi-trophy-fill text-lime me-2"></i>Upcoming Race Directory
+    </h3>
+    <span class="badge bg-secondary rounded-pill px-3 py-2 text-off-white">@(Model?.Count() ?? 0) Events Listed</span>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success bg-dark border-lime text-lime alert-dismissible fade show rounded-4 mb-4" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var ev in Model)
+        {
+            <div class="col">
+                <!-- Dark Slate Card Tile -->
+                <div class="card card-dark h-100 overflow-hidden">
+                    <div class="position-relative">
+                        @if (!string.IsNullOrEmpty(ev.BannerImageUrl))
+                        {
+                            <img src="@ev.BannerImageUrl" class="card-img-top" alt="@ev.Name" style="height: 220px; object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <img src="https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?auto=format&fit=crop&w=800&q=80"
+                                 class="card-img-top" alt="Race Banner" style="height: 220px; object-fit: cover;" />
+                        }
+                        <span class="badge badge-lime position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2 shadow">
+                            @ev.EventType
+                        </span>
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column">
+                        <h4 class="card-title fw-bold text-off-white mb-1">@ev.Name</h4>
+                        <p class="text-muted-slate small mb-3"><i class="bi bi-person-fill me-1 text-lime"></i> Hosted by @ev.OrganizerName</p>
+
+                        <p class="card-text text-muted-slate mb-4 flex-grow-1">@ev.Description</p>
+
+                        <!-- Dark Charcoal Inner Logistics Box -->
+                        <div class="box-inner-slate p-3 mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted-slate"><i class="bi bi-calendar-event me-1 text-lime"></i> Date:</span>
+                                <strong class="text-off-white">@ev.Date.ToString("MMM dd, yyyy @ HH:mm")</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted-slate"><i class="bi bi-geo-alt me-1 text-lime"></i> Venue:</span>
+                                <strong class="text-off-white">@ev.Location</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted-slate"><i class="bi bi-speedometer2 me-1 text-lime"></i> Distance:</span>
+                                <strong class="text-off-white">@ev.Distance km</strong>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer Navigation -->
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="small text-muted-slate"><i class="bi bi-people-fill text-lime me-1"></i> @ev.TotalEnrolments Registered</span>
+                            <a asp-controller="Participant" asp-action="Details" asp-route-id="@ev.EventId" class="btn btn-lime btn-sm px-3">
+                                View Event
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="card card-dark p-5 text-center">
+                <i class="bi bi-calendar-x display-1 text-lime mb-3"></i>
+                <h4 class="fw-bold text-off-white">No Events Currently Scheduled</h4>
+                <p class="text-muted-slate">Check back soon or sign in as an Organiser to host your own event!</p>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  racingdays.db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: RacingDays_DB
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrongPassword2026!
+    ports:
+      - "1433:1433"
+
+  racingdays.api:
+    image: racingdays-api
+    container_name: RacingDays_API
+    build:
+      context: .
+      dockerfile: RacingDays.API/Dockerfile
+    ports:
+      - "7001:80"
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=racingdays.db;Database=RacingDaysDb;User Id=sa;Password=YourStrongPassword2026!;TrustServerCertificate=True
+    depends_on:
+      - racingdays.db
+
+  racingdays.web:
+    image: racingdays-web
+    container_name: RacingDays_Web
+    build:
+      context: .
+      dockerfile: RacingDays.Web/Dockerfile
+    ports:
+      - "7002:80"
+    environment:
+      - ApiBaseUrl=http://racingdays.api:80/
+    depends_on:
+      - racingdays.api
