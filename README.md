@@ -56,7 +56,7 @@ Screenshot of successful build:
 Video Walkthrough
 •	Unlisted YouTube Link Part 1: https://youtu.be/9dEouBo3yCO
 •	Unlisted YouTube Link Part 2: https://youtu.be/LwcqEs_oa0o 
-•	Unlisted YouTube Link Part 3: https://youtu.be/W8M-1BxqCqc 
+•	Unlisted YouTube Link Part 3: https://youtu.be/VrVQni49QVI
 Walkthrough Topics Covered:
 •	ERD architecture and design decisions.
 •	ASP.NET Core project structure, Controllers, and DTOs.
